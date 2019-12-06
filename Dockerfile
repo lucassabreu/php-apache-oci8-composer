@@ -13,6 +13,7 @@ ENV XDEBUG_AUTOSTART=false
 ENV XDEBUG_CONNECT_BACK=true
 ENV XDEBUG_ENABLED=false
 ENV XDEBUG_IDEKEY="docker"
+ENV PHP_BUILD_DATE="20170718"
 
 RUN apt-get update && apt-get install -y wget vim supervisor zip libfreetype6-dev libjpeg62-turbo-dev \
     libmcrypt-dev libpng-dev libssl-dev libaio1 git libcurl4-openssl-dev libxslt-dev \
@@ -39,8 +40,8 @@ RUN echo "---> Adding Support for NewRelic" && \
     wget -r -l1 -nd -A"linux.tar.gz" https://download.newrelic.com/php_agent/release/ && \
     gzip -dc newrelic*.tar.gz | tar xf - && \
     cd newrelic-php5* && \
-    rm -f /usr/local/lib/php/extensions/no-debug-non-zts-20170718/newrelic.so && \
-    cp ./agent/x64/newrelic-20170718.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/newrelic.so && \
+    rm -f /usr/local/lib/php/extensions/no-debug-non-zts-${PHP_BUILD_DATE}/newrelic.so && \
+    cp ./agent/x64/newrelic-${PHP_BUILD_DATE}.so /usr/local/lib/php/extensions/no-debug-non-zts-${PHP_BUILD_DATE}/newrelic.so && \
     cp ./daemon/newrelic-daemon.x64 /usr/bin/newrelic-daemon && \
     cp ./scripts/newrelic.ini.template /scripts/newrelic.ini && \
     mkdir /var/log/newrelic &&  \
